@@ -246,17 +246,25 @@ class GusApi
     /**
      * @param $sid
      * @param array $searchData
-     * @return SearchReport
+     * @return SearchReport | SearchReport[]
      * @throws NotFoundException
      */
     private function search($sid, array $searchData)
     {
         try{
-            $response = $this->adapter->search($sid, $searchData);
+            $searchResult = $this->adapter->search($sid, $searchData);
         } catch (NoDataException $e) {
             throw new NotFoundException(sprintf("Not found subject"));
         }
+        if(count($searchResult) > 0) {
+            $response = [];
 
-        return new SearchReport($response[0]);
+            foreach($searchResult as $item) {
+                $response[] = new SearchReport($item);
+            }
+        } else {
+            $response = new SearchReport($searchResult);
+        }
+        return $response;
     }
 }
