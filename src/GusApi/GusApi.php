@@ -170,6 +170,42 @@ class GusApi
     }
 
     /**
+     * Get basic information by multiple REGON numbers
+     *
+     * @param string $sid
+     * @param array $regons
+     * @return SearchReport
+     * @throws NotFoundException
+     */
+    public function getByRegons9($sid, array $regons) {
+        if(count($regons) > 100) {
+            throw new \InvalidArgumentException("You can enter only 100 regons");
+        }
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_REGONS9 => implode(',',$regons)
+        ]);
+    }
+
+    /**
+     * Get basic information by multiple REGON numbers
+     *
+     * @param string $sid
+     * @param array $regons
+     * @return SearchReport
+     * @throws NotFoundException
+     */
+    public function getByRegons14($sid, array $regons) {
+        if(count($regons) > 100) {
+            throw new \InvalidArgumentException("You can enter only 100 regons");
+        }
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_REGONS14 => implode(',',$regons)
+        ]);
+    }
+
+    /**
      * Get basic information by KRS number
      *
      * @param $sid
