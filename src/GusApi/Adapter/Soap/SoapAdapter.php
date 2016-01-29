@@ -111,8 +111,8 @@ class SoapAdapter implements AdapterInterface
         } catch (\Exception $e) {
             throw new NoDataException("No data found for");
         }
-
-        return $result->dane;
+        $result = (array)$result;
+        return isset($result['dane']) ? $result['dane'] : null;
     }
 
     /**
