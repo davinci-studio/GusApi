@@ -291,7 +291,7 @@ class GusApi
         } catch (NoDataException $e) {
             throw new NotFoundException(sprintf("Not found subject"));
         }
-        if(count($searchResult) > 0) {
+        if(!isset($searchResult->Regon) && count($searchResult) > 0) {
             $response = [];
 
             foreach($searchResult as $item) {
