@@ -170,6 +170,24 @@ class GusApi
     }
 
     /**
+     * Get basic information by multiple KRS numbers
+     *
+     * @param string $sid
+     * @param array $krses
+     * @return SearchReport
+     * @throws NotFoundException
+     */
+    public function getByKrses($sid, array $krses) {
+        if(count($krses) > 100) {
+            throw new \InvalidArgumentException("You can enter only 100 regons");
+        }
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_KRSES => implode(',',$krses)
+        ]);
+    }
+
+    /**
      * Get basic information by multiple REGON numbers
      *
      * @param string $sid
