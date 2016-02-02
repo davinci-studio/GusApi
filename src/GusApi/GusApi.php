@@ -188,6 +188,23 @@ class GusApi
     }
 
     /**
+     * Get basic information by multiple NIP numbers
+     *
+     * @param string $sid
+     * @param array $nips
+     * @return SearchReport
+     * @throws NotFoundException
+     */
+    public function getByNips($sid, array $nips) {
+        if(count($nips) > 100) {
+            throw new \InvalidArgumentException("You can enter only 100 regons");
+        }
+
+        return $this->search($sid, [
+            RegonConstantsInterface::SEARCH_TYPE_NIPS => implode(',',$nips)
+        ]);
+    }
+    /**
      * Get basic information by multiple REGON numbers
      *
      * @param string $sid
